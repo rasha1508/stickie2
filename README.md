@@ -1,1 +1,0 @@
-# stickie2
