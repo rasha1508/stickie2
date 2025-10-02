@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Note Widget</title>
+    <style>
+        body {
+            font-family: 'Patrick Hand', cursive; /* Use a handwriting-like font */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff; /* White background */
+        }
+        .sticky-note {
+            width: 300px;
+            padding: 20px;
+            background-color: #ffe6e6; /* Default pastel color */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+            margin-top: 10px; /* New margin for spacing */
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-family: 'Patrick Hand', cursive;
+            resize: none;
+            outline: none;
+            background-color: transparent;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px; /* New margin for spacing */
+        }
+        .color-buttons {
+            display: flex;
+            margin-right: 20px; /* Space between color buttons and text size */
+        }
+        .color-button {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+            margin-right: 5px; /* Space between color buttons */
+        }
+        .color-button:hover {
+            transform: scale(1.1);
+        }
+        .text-size-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .text-size-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <div class="controls">
+            <div class="color-buttons">
+                <!-- Added two new color buttons -->
+                <button class="color-button" style="background-color: #ffe6e6;" onclick="changeColor('#ffe6e6')"></button>
+                <button class="color-button" style="background-color: #e6f7ff;" onclick="changeColor('#e6f7ff')"></button>
+                <button class="color-button" style="background-color: #e6ffe6;" onclick="changeColor('#e6ffe6')"></button>
+                <button class="color-button" style="background-color: #fff0e6;" onclick="changeColor('#fff0e6')"></button>
+                <button class="color-button" style="background-color: #ffebcc;" onclick="changeColor('#ffebcc')"></button>
+                <button class="color-button" style="background-color: #e6ccff;" onclick="changeColor('#e6ccff')"></button>
+            </div>
+            <button class="text-size-button" onclick="changeTextSize('small')">A</button>
+            <button class="text-size-button" onclick="changeTextSize('large')">A</button>
+        </div>
+        <div class="sticky-note" id="stickyNote">
+            <textarea id="noteText" placeholder="Write your notes here..."></textarea>
+        </div>
+    </div>
+
+    <script>
+        function changeColor(color) {
+            document.getElementById('stickyNote').style.backgroundColor = color;
+        }
+
+        function changeTextSize(size) {
+            const textarea = document.getElementById('noteText');
+            if (size === 'small') {
+                textarea.style.fontSize = '14px'; // Small size
+            } else if (size === 'large') {
+                textarea.style.fontSize = '20px'; // Large size
+            }
+        }
+    </script>
+</body>
+</html>
