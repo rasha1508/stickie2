@@ -14,8 +14,8 @@
             background-color: #ffffff;
         }
         .sticky-note {
-            width: 200px; /* Reduced from 300px */
-            padding: 15px; /* Reduced from 20px */
+            width: 200px;
+            padding: 15px;
             background-color: #ffe6e6;
             border-radius: 15px;
             box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
@@ -24,15 +24,17 @@
         }
         textarea {
             width: 100%;
-            height: 100px; /* Reduced from 150px */
+            min-height: 60px; /* Minimum height */
+            max-height: 120px; /* Maximum height */
             border: none;
             border-radius: 10px;
-            padding: 8px; /* Reduced from 10px */
+            padding: 8px;
             font-family: 'Patrick Hand', cursive;
-            font-size: 14px; /* Added default font size */
+            font-size: 14px;
             resize: none;
             outline: none;
             background-color: transparent;
+            overflow: hidden; /* Hide scrollbar */
         }
         .controls {
             display: flex;
@@ -41,16 +43,16 @@
         }
         .color-buttons {
             display: flex;
-            margin-right: 15px; /* Reduced from 20px */
+            margin-right: 15px;
         }
         .color-button {
-            width: 18px; /* Reduced from 20px */
-            height: 18px; /* Reduced from 20px */
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             cursor: pointer;
             border: none;
             transition: transform 0.2s;
-            margin-right: 4px; /* Reduced from 5px */
+            margin-right: 4px;
         }
         .color-button:hover {
             transform: scale(1.1);
@@ -58,7 +60,7 @@
         .text-size-button {
             background: none;
             border: none;
-            font-size: 16px; /* Reduced from 20px */
+            font-size: 16px;
             cursor: pointer;
             transition: transform 0.2s;
         }
@@ -83,7 +85,7 @@
             <button class="text-size-button" onclick="changeTextSize('large')">A</button>
         </div>
         <div class="sticky-note" id="stickyNote">
-            <textarea id="noteText" placeholder="Write your notes here..."></textarea>
+            <textarea id="noteText" placeholder="Write your notes here..." oninput="autoResize()"></textarea>
         </div>
     </div>
 
@@ -95,11 +97,25 @@
         function changeTextSize(size) {
             const textarea = document.getElementById('noteText');
             if (size === 'small') {
-                textarea.style.fontSize = '12px'; /* Reduced from 14px */
+                textarea.style.fontSize = '12px';
             } else if (size === 'large') {
-                textarea.style.fontSize = '16px'; /* Reduced from 20px */
+                textarea.style.fontSize = '16px';
             }
         }
+        
+        // Auto-resize textarea as content changes
+        function autoResize() {
+            const textarea = document.getElementById('noteText');
+            // Reset height to auto to properly calculate new height
+            textarea.style.height = 'auto';
+            // Set new height based on scrollHeight (content height)
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+        
+        // Initialize textarea height on page load
+        window.onload = function() {
+            autoResize();
+        };
     </script>
 </body>
 </html>
