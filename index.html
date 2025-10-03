@@ -105,13 +105,50 @@
                     <button class="text-size-button" onclick="changeTextSize('large')">A</button>
                 </div>
             </div>
-            <textarea id="noteText" placeholder="Write a note..." oninput="autoResize()"></textarea>
+            <textarea id="noteText" placeholder="Write a note..." oninput="autoResize(); saveNote();"></textarea>
         </div>
     </div>
 
     <script>
+        // Function to save note data to localStorage
+        function saveNote() {
+            const noteContent = document.getElementById('noteText').value;
+            const noteColor = document.getElementById('stickyNote').style.backgroundColor;
+            const noteFontSize = document.getElementById('noteText').style.fontSize;
+            
+            const noteData = {
+                content: noteContent,
+                color: noteColor || '#ffe6e6', // Default color if not set
+                fontSize: noteFontSize || '14px' // Default font size if not set
+            };
+            
+            localStorage.setItem('stickyNoteData', JSON.stringify(noteData));
+        }
+        
+        // Function to load note data from localStorage
+        function loadNote() {
+            const savedData = localStorage.getItem('stickyNoteData');
+            
+            if (savedData) {
+                const noteData = JSON.parse(savedData);
+                
+                // Set content
+                document.getElementById('noteText').value = noteData.content;
+                
+                // Set color
+                document.getElementById('stickyNote').style.backgroundColor = noteData.color;
+                
+                // Set font size
+                document.getElementById('noteText').style.fontSize = noteData.fontSize;
+                
+                // Adjust height after content is loaded
+                autoResize();
+            }
+        }
+        
         function changeColor(color) {
             document.getElementById('stickyNote').style.backgroundColor = color;
+            saveNote(); // Save after changing color
         }
 
         function changeTextSize(size) {
@@ -121,6 +158,7 @@
             } else if (size === 'large') {
                 textarea.style.fontSize = '16px';
             }
+            saveNote(); // Save after changing text size
         }
         
         function autoResize() {
@@ -137,6 +175,7 @@
         
         // Initialize on page load
         window.onload = function() {
+            loadNote(); // Load saved note data
             autoResize();
         };
     </script>
